@@ -1,0 +1,3 @@
+<?php require APP_PATH . '/views/layouts/header.php'; ?>
+<section class="auth-page"><div class="auth-card"><div class="eyebrow">500 / Setup check</div><h1>Aplikasi belum siap.</h1><p class="auth-subtitle"><?= e($setupError ?? 'Terjadi kesalahan pada aplikasi.') ?></p><div class="setup-hint"><strong>Checklist cepat</strong><ol><li>Salin `.env.example` menjadi `.env`.</li><li>Pastikan Apache dan MySQL aktif.</li><li>Import skema database ke database kosong.</li><li>Biarkan `APP_URL` kosong agar lokasi aplikasi terdeteksi otomatis.</li></ol></div><a class="btn btn-primary btn-wide" href="<?= url() ?>">Coba lagi ↗</a></div></section>
+<?php require APP_PATH . '/views/layouts/footer.php'; ?>

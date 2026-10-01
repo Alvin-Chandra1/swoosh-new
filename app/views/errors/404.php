@@ -1,0 +1,3 @@
+<?php require APP_PATH . '/views/layouts/header.php'; ?>
+<section class="auth-page"><div class="auth-card"><div class="eyebrow">404 / Not found</div><h1>Halaman ini tidak ada.</h1><p class="auth-subtitle">Mungkin URL-nya berubah, tapi court yang bagus masih menunggu.</p><a class="btn btn-primary btn-wide" href="<?= url() ?>">Kembali ke beranda ↗</a></div></section>
+<?php require APP_PATH . '/views/layouts/footer.php'; ?>
