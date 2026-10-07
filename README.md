@@ -15,18 +15,18 @@ Link gambar yang disimpan pada kolom `fields.image_url` ditampilkan pada halaman
 ## Kebutuhan
 
 - PHP 8.0 atau lebih baru dengan ekstensi `pdo_mysql`.
-- MySQL 8 atau MariaDB yang mendukung skema aplikasi.
+- MySQL atau MariaDB dengan dukungan `utf8mb4` dan `utf8mb4_general_ci`.
 - Apache (XAMPP/Laragon) atau server PHP lain.
 
-Dump database yang dilampirkan dibuat dengan MySQL 8.0.30. Gunakan MySQL 8 untuk mengimpor dump itu karena dump memakai collation `utf8mb4_0900_ai_ci`.
+Dump asli dibuat di MySQL 8.0.30 dan memakai collation `utf8mb4_0900_ai_ci`, yang tidak tersedia di banyak versi MariaDB dan MySQL sebelum 8. Dump `database/swoosh.sql` sudah disesuaikan ke `utf8mb4_general_ci` pada semua tabel. Mengubah collation default database saja tidak mengubah collation tabel yang sudah dibuat.
 
 ## Menjalankan secara lokal (XAMPP/Laragon)
 
 1. Salin folder proyek ke `htdocs/swoosh` (XAMPP) atau `www/swoosh` (Laragon).
 2. Jalankan Apache dan MySQL.
-3. Siapkan database bernama `swoosh`:
-   - Untuk instalasi baru, import `database/swoosh.sql` melalui phpMyAdmin.
-   - Jika ingin memakai dump database Anda sendiri, buat database kosong lalu import dump tersebut. Jangan import `database/swoosh.sql` ke database yang sudah berisi data: file contoh itu menghapus tabel Swoosh lama sebelum membuat tabel dan data demo.
+3. Siapkan database bernama `swoosh` dengan charset `utf8mb4` dan collation `utf8mb4_general_ci`:
+   - Untuk instalasi baru, buat database kosong dengan collation tersebut, lalu import `database/swoosh.sql` melalui phpMyAdmin. Dump ini berisi data pada file yang Anda kirim.
+   - Untuk database yang sudah berisi data, buat cadangan lalu jalankan `database/convert-existing-to-utf8mb4-general-ci.sql` pada database `swoosh`. Skrip itu mengubah collation tabel tanpa menghapus isinya. Jangan import dump instalasi baru ke database yang sudah memiliki tabel Swoosh karena tabel dan data pada dump akan berbenturan dengan yang sudah ada.
 4. Salin `.env.example` menjadi `.env`, kemudian sesuaikan koneksi database:
 
    ```env
@@ -37,7 +37,7 @@ Dump database yang dilampirkan dibuat dengan MySQL 8.0.30. Gunakan MySQL 8 untuk
    DB_PASS=
    ```
 
-   Biarkan `APP_URL=` kosong agar alamat situs dan endpoint pemuatan slot mengikuti lokasi folder secara otomatis. Jika aplikasi dipasang di alamat khusus, isi `APP_URL` dengan alamat dasar aplikasi sampai folder `public`, tanpa garis miring di akhir.
+   Biarkan `APP_URL=` kosong agar alamat situs dan endpoint pemuatan slot mengikuti lokasi folder secara otomatis. Jika aplikasi dipasang di alamat khusus, isi `APP_URL` dengan alamat dasar aplikasi sampai folder `public`, tanpa garis miring di akhir. Koneksi database menggunakan charset dan collation `utf8mb4_general_ci`.
 5. Buka `http://localhost/swoosh/public`.
 
 ## Pembayaran
